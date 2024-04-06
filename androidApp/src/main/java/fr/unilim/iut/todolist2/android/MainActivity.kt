@@ -1,13 +1,17 @@
 package fr.unilim.iut.todolist2.android
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -18,6 +22,7 @@ import fr.unilim.iut.todolist2.android.db.TaskDAO
 import fr.unilim.iut.todolist2.android.model.Repository
 import fr.unilim.iut.todolist2.android.model.State
 import fr.unilim.iut.todolist2.android.model.Task
+import org.w3c.dom.Text
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.Clock
@@ -54,6 +59,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             //GreetingView(Greeting().greet())
             test_repo(repository = repositoryDAO.get(testRepo.id)!!)
+            button_add_task()
+
         }
     }
 }
@@ -68,9 +75,19 @@ fun test_repo(repository: Repository){
     }
 
 }
+@Composable
+fun button_add_task() {
+    val context = LocalContext.current
+    Button(onClick = {
+        context.startActivity(Intent(context, NewTaskActivity::class.java))
+    }) {
+        Text("+")
+    }
+}
 
 @Composable
 fun GreetingView(text: String) {
     Text(text = text)
 }
+
 
